@@ -6,7 +6,7 @@
 
 ```zchop(x,eps)``` use eps rather than 1e-14
 
-zchop works on complex numbers, arrays, and some other structures.
+zchop works on complex and rational numbers, arrays, and some other structures.
 
 I think there is something like this already in Julia, so
 zchop is not neccessary. But, I was unable to find it.

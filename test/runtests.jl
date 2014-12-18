@@ -17,3 +17,5 @@ t = (za,za)
 @test zchop( t ) == (zza,zza)
 @test zchop( [za za] ) == [zza zza]
 @test zchop(BigFloat[1e-15,1]) == BigFloat[0,1]
+
+@test zchop(1//10^15) == 0//1
