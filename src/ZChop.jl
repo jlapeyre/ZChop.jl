@@ -10,6 +10,7 @@ zchop(a::AbstractArray, eps=zeps) = (b = similar(a); for i in 1:length(a)  b[i] 
 zchop(x::String,eps=zeps) = x
 zchop(x::Char,eps=zeps) = x
 zchop(x::MathConst,eps=zeps) = zchop(float(x),eps)
+zchop(x::Expr,eps=zeps) = Expr(x.head,zchop(x.args)...)
 zchop(x,eps=zeps) =  applicable(start,x) ? map((x)->zchop(x,eps),x) : x
 
 end # module ZChop

@@ -31,3 +31,9 @@ r = r"cat"
 @test zchop(Base.pi,4) == 0.0
 @test zchop(BigInt(1)) == BigInt(1)
 @test zchop(BigInt(1),3) == BigInt(0)
+m = [[1.0,2.0,1e-16] [3.0,4.0,5.0]]
+@test zchop(m) == [[1.0,2.0,0.0] [3.0,4.0,5.0]]
+@test zchop(:a) == :a
+@test zchop(:(1+1)) == :(1+1)
+@test zchop(:(1+1e-16)) == :(1+0.0)
+@test zchop(:( "cat" + [1e-16,2.0] )) == :( "cat" + [0.0,2.0] )
