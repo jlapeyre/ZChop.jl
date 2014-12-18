@@ -28,5 +28,6 @@ r = r"cat"
 @test zchop('x') == 'x'
 @test zchop(STDOUT) == STDOUT
 @test zchop(Base.pi) == Base.pi
+@test zchop(Base.pi,4) == 0.0
 @test zchop(BigInt(1)) == BigInt(1)
 @test zchop(BigInt(1),3) == BigInt(0)

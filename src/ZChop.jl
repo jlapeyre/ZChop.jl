@@ -9,7 +9,7 @@ zchop{T<:Complex}(x::T, eps=zeps) = complex(zchop(real(x),eps),zchop(imag(x),eps
 zchop(a::AbstractArray, eps=zeps) = (b = similar(a); for i in 1:length(a)  b[i] = zchop(a[i],eps) end ; b)
 zchop(x::String,eps=zeps) = x
 zchop(x::Char,eps=zeps) = x
-zchop(x::MathConst,eps=zeps) = zchop(float(x),zeps)
+zchop(x::MathConst,eps=zeps) = zchop(float(x),eps)
 zchop(x,eps=zeps) =  applicable(start,x) ? map((x)->zchop(x,eps),x) : x
 
 end # module ZChop

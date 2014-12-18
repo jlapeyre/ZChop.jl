@@ -7,4 +7,4 @@
 ```zchop(x,eps)``` use eps rather than 1e-14
 
 zchop works on complex and rational numbers, arrays, and some other structures. The idea
-is for zchop to be the identity on anything that can't be sensibly compared to epsilon.
+is for zchop to be the identity on anything that can't be sensibly compared to eps.
