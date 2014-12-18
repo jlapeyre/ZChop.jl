@@ -9,4 +9,4 @@
 zchop works on complex numbers, arrays, and some other structures.
 
 I think there is something like this already in Julia, so
-zchop is not neccessary. But was unable to find it.
+zchop is not neccessary. But, I was unable to find it.
