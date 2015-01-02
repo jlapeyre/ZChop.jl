@@ -42,3 +42,5 @@ b = [1:100] * 1e-15
 c = zchop(b)
 zchop!(b)
 @test c == b
+
+@test_throws MethodError zchop()
