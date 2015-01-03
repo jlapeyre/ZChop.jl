@@ -58,7 +58,7 @@ zchop works on complex and rational numbers, arrays, and some other structures.
 The idea is for zchop to descend into structures, chopping numbers, and acting as the
 the identity on anything that can't be sensibly compared to eps.
 
-## Example
+### Example
 ```julia
 julia> a = Any[ [1e-15, "dog", (BigFloat(10.0))^-15, complex(1e-15,1), 1 // 10^15],
          [[2,3] [4,1e-15]] ];
