@@ -1,15 +1,53 @@
 # ZChop
 
-[![Build Status](https://travis-ci.org/jlapeyre/ZChop.jl.svg?branch=master)](https://travis-ci.org/jlapeyre/ZChop.jl)
+`zchop(x)` replaces numbers in `x` that are close to zero with zero.
 
-```zchop(x)``` return 0 if abs(x) is smaller than 1e-14, and x otherwise.
+```zchop(x)``` returns 0 if abs(x) is smaller than 1e-14, and x otherwise.
 
-```zchop(x,eps)``` use eps rather than 1e-14
+```zchop(x,eps)``` uses eps rather than 1e-14
 
 ```zchop!(a,eps)``` works inplace on Array a.
 
-zchop works on complex and rational numbers, arrays, and some other structures. The idea
-is for zchop to descend into structures, chopping numbers, and acting as the
+Examples:
+
+```julia
+julia> res = ifft(fft([2,1,1,0,0,0]))
+6-element Array{Complex{Float64},1}:
+         2.0+0.0im
+         1.0+0.0im
+         1.0+0.0im
+         0.0+0.0im
+ 7.40149e-17+0.0im
+ 7.40149e-17+0.0im
+
+julia> zchop(res)
+6-element Array{Complex{Float64},1}:
+ 2.0+0.0im
+ 1.0+0.0im
+ 1.0+0.0im
+ 0.0+0.0im
+ 0.0+0.0im
+ 0.0+0.0im
+```
+
+```julia
+julia> exp(linspace(0,4,4) * pi * im)
+4-element Array{Complex{Float64},1}:
+          1.0+0.0im     
+         -0.5-0.866025im
+         -0.5+0.866025im
+ 1.0-4.89859e-16im
+
+julia> zchop(res)
+4-element Array{Complex{Float64},1}:
+  1.0+0.0im     
+ -0.5-0.866025im
+ -0.5+0.866025im
+  1.0+0.0im
+```
+
+zchop works on complex and rational numbers, arrays, and some other structures.
+The idea is for zchop to descend into structures, chopping numbers, and acting as the
 the identity on anything that can't be sensibly compared to eps.
 
 ## Example
