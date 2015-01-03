@@ -10,26 +10,27 @@
 
 Examples:
 
+
 ```julia
-julia> res = real(ifft(fft([2,1,1,0,0,0,0])))
-7-element Array{Float64,1}:
-  2.0        
-  1.0        
-  1.0        
-  7.8904e-17 
-  4.79786e-17
- -1.26883e-16
- -6.34413e-17
+julia> res = ifft(fft([2,1,1,0,0,0,0]))
+7-element Array{Complex{Float64},1}:
+          2.0+0.0im
+          1.0+0.0im
+          1.0+0.0im
+   7.8904e-17+0.0im
+  4.79786e-17+0.0im
+ -1.26883e-16+0.0im
+ -6.34413e-17+0.0im
 
 julia> zchop(res)
-7-element Array{Float64,1}:
- 2.0
- 1.0
- 1.0
- 0.0
- 0.0
- 0.0
- 0.0
+7-element Array{Complex{Float64},1}:
+ 2.0+0.0im
+ 1.0+0.0im
+ 1.0+0.0im
+ 0.0+0.0im
+ 0.0+0.0im
+ 0.0+0.0im
+ 0.0+0.0im
  ```
 
 ```julia
@@ -47,6 +48,11 @@ julia> zchop(res)
  -1.0+0.0im
   1.0+0.0im
  ```
+
+### Details
+
+The type of the numbers is preserved.  For instance, complex numbers
+with imaginary part near zero are not replaced with real numbers.
 
 zchop works on complex and rational numbers, arrays, and some other structures.
 The idea is for zchop to descend into structures, chopping numbers, and acting as the
