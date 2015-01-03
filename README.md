@@ -49,6 +49,20 @@ julia> zchop(res)
   1.0+0.0im
  ```
 
+```julia
+julia> a = sparse([ [1.0,1e-16]  [1e-16, 1.0]])
+2x2 sparse matrix with 4 Float64 entries:
+        [1, 1]  =  1.0
+        [2, 1]  =  1.0e-16
+        [1, 2]  =  1.0e-16
+        [2, 2]  =  1.0
+
+julia> zchop(a)
+2x2 sparse matrix with 2 Float64 entries:
+        [1, 1]  =  1.0
+        [2, 2]  =  1.0
+```        
+
 ### Details
 
 The type of the numbers is preserved.  For instance, complex numbers
