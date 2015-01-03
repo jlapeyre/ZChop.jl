@@ -11,40 +11,42 @@
 Examples:
 
 ```julia
-julia> res = ifft(fft([2,1,1,0,0,0]))
-6-element Array{Complex{Float64},1}:
-         2.0+0.0im
-         1.0+0.0im
-         1.0+0.0im
-         0.0+0.0im
- 7.40149e-17+0.0im
- 7.40149e-17+0.0im
+julia> res = real(ifft(fft([2,1,1,0,0,0,0])))
+7-element Array{Float64,1}:
+  2.0        
+  1.0        
+  1.0        
+  7.8904e-17 
+  4.79786e-17
+ -1.26883e-16
+ -6.34413e-17
 
 julia> zchop(res)
-6-element Array{Complex{Float64},1}:
- 2.0+0.0im
- 1.0+0.0im
- 1.0+0.0im
- 0.0+0.0im
- 0.0+0.0im
- 0.0+0.0im
-```
+7-element Array{Float64,1}:
+ 2.0
+ 1.0
+ 1.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ ```
 
 ```julia
-julia> exp(linspace(0,4,4) * pi * im)
+julia> res = exp(linspace(1,4,4) * pi * im)
 4-element Array{Complex{Float64},1}:
-          1.0+0.0im     
-         -0.5-0.866025im
-         -0.5+0.866025im
- 1.0-4.89859e-16im
+ -1.0+1.22465e-16im
+  1.0-2.44929e-16im
+ -1.0+3.67394e-16im
+  1.0-4.89859e-16im
 
 julia> zchop(res)
 4-element Array{Complex{Float64},1}:
-  1.0+0.0im     
- -0.5-0.866025im
- -0.5+0.866025im
+ -1.0+0.0im
   1.0+0.0im
-```
+ -1.0+0.0im
+  1.0+0.0im
+ ```
 
 zchop works on complex and rational numbers, arrays, and some other structures.
 The idea is for zchop to descend into structures, chopping numbers, and acting as the
