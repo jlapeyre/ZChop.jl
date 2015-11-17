@@ -38,7 +38,7 @@ m = [[1.0,2.0,1e-16] [3.0,4.0,5.0]]
 @test zchop(:(1+1e-16)) == :(1+0.0)
 @test zchop(:( "cat" + [1e-16,2.0] )) == :( "cat" + [0.0,2.0] )
 
-let b = [1:100] * 1e-15, c = zchop(b)
+let b = collect(1:100) * 1e-15, c = zchop(b)
     zchop!(b)
     @test c == b
 end
