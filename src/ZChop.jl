@@ -10,11 +10,10 @@ const zeps = 1e-14
 zchop{T<:Real}(x::T, eps=zeps) = abs(x) > convert(T,eps) ? x : zero(T)
 zchop{T<:Integer}(x::T, eps=zeps) = abs(x) > eps ? x : zero(T)
 zchop{T<:Complex}(x::T, eps=zeps) = complex(zchop(real(x),eps),zchop(imag(x),eps))
-zchop(a::AbstractArray, eps=zeps) =
-    (b = similar(a); for i in 1:length(a) b[i] = zchop(a[i],eps) end ; b)
-zchop!(a::AbstractArray, eps=zeps) = (for i in 1:length(a) a[i] = zchop(a[i],eps) end ; a)
-zchop(x::Union{AbstractString,Char},eps=zeps) = x
-zchop(x::Irrational,eps=zeps) = zchop(float(x),eps)
+zchop{T<:AbstractArray}(a::T, eps=zeps) = (b = similar(a); for i in 1:length(a) b[i] = zchop(a[i],eps) end ; b)
+zchop!{T<:AbstractArray}(a::T, eps=zeps) = (for i in 1:length(a) a[i] = zchop(a[i],eps) end ; a)
+zchop{T<:Union{AbstractString,Char}}(x::T,eps=zeps) = x
+zchop{T<:Irrational}(x::T,eps=zeps) = zchop(float(x),eps)
 zchop(x::Expr,eps=zeps) = Expr(x.head,zchop(x.args)...)
 zchop(x,eps) =  applicable(start,x) ? map((x)->zchop(x,eps),x) : x
 zchop(x) = applicable(start,x) ? map(zchop,x) : x
