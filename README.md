@@ -1,4 +1,12 @@
 # ZChop
+### Replace small numbers with zero
+
+Linux, OSX: [![Build Status](https://travis-ci.org/jlapeyre/ZChop.jl.svg)](https://travis-ci.org/jlapeyre/ZChop.jl)
+[![codecov.io](http://codecov.io/github/jlapeyre/ZChop.jl/coverage.svg?branch=master)](http://codecov.io/github/jlapeyre/ZChop.jl?branch=master)
+
+[![ZChop](http://pkg.julialang.org/badges/ZChop_0.4.svg)](http://pkg.julialang.org/?pkg=ZChop&ver=0.4)
+[![ZChop](http://pkg.julialang.org/badges/ZChop_0.5.svg)](http://pkg.julialang.org/?pkg=ZChop&ver=0.5)
+[![ZChop](http://pkg.julialang.org/badges/ZChop_0.6.svg)](http://pkg.julialang.org/?pkg=ZChop&ver=0.6)
 
 `zchop(x)` replaces numbers in `x` that are close to zero with zero.
 

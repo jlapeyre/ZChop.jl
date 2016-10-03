@@ -47,9 +47,9 @@ end
 function runalt()
     for j in 1:100
         testzchop()
-        testzchop2()        
+        testzchop2()
     end
-end        
+end
 
 # Return a tuple of n copies of x. copy of bits that is.
 # n limited to about 10^5
