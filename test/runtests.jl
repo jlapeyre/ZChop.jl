@@ -17,7 +17,7 @@ t = (za,za)
 @test zchop( t ) == (zza,zza)
 @test zchop( [za za] ) == [zza zza]
 @test zchop(BigFloat[1e-15,1]) == BigFloat[0,1]
-@test zchop(1//10^15) == 0//1
+if Int != Int32 @test zchop(1//10^15) == 0//1 end
 @test zchop([1e-16,"cat"]) == [ 0.0, "cat"]
 r = r"cat"
 @test zchop(r) == r
