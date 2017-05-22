@@ -43,7 +43,7 @@ julia> zchop(res)
  0.0+0.0im
  0.0+0.0im
  0.0+0.0im
- ```
+```
 
 ```julia
 julia> res = exp(linspace(1,4,4) * pi * im)
@@ -59,7 +59,7 @@ julia> zchop(res)
   1.0+0.0im
  -1.0+0.0im
   1.0+0.0im
- ```
+```
 
 ```julia
 julia> a = sparse([ [1.0,1e-16]  [1e-16, 1.0]])
