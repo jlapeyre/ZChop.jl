@@ -8,8 +8,6 @@ Windows: [![Build Status](https://ci.appveyor.com/api/projects/status/github/jla
 [![Coverage Status](https://coveralls.io/repos/jlapeyre/ZChop.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/jlapeyre/ZChop.jl?branch=master)
 [![codecov.io](http://codecov.io/github/jlapeyre/ZChop.jl/coverage.svg?branch=master)](http://codecov.io/github/jlapeyre/ZChop.jl?branch=master)
 
-[![ZChop](http://pkg.julialang.org/badges/ZChop_0.4.svg)](http://pkg.julialang.org/?pkg=ZChop&ver=0.4)
-[![ZChop](http://pkg.julialang.org/badges/ZChop_0.5.svg)](http://pkg.julialang.org/?pkg=ZChop&ver=0.5)
 [![ZChop](http://pkg.julialang.org/badges/ZChop_0.6.svg)](http://pkg.julialang.org/?pkg=ZChop&ver=0.6)
 
 `zchop(x)` replaces numbers in `x` that are close to zero with zero.

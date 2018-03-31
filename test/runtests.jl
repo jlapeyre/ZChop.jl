@@ -1,5 +1,9 @@
+using Compat
+
 using ZChop
-using Base.Test
+using Compat.Test
+
+const mystdout = isdefined(Main, :stdout) ? stdout : STDOUT
 
 z1 = complex(1,1e-15)
 zz1 = complex(1,0.0)
@@ -26,7 +30,7 @@ r = r"cat"
 @test zchop(Int) == Int
 @test zchop([true,false]) == [true,false]
 @test zchop('x') == 'x'
-@test zchop(STDOUT) == STDOUT
+@test zchop(mystdout) == mystdout
 @test zchop(Base.pi) == float(Base.pi)
 @test zchop(Base.pi,4) == 0.0
 @test zchop(BigInt(1)) == BigInt(1)
