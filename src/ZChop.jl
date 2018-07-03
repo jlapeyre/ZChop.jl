@@ -24,9 +24,8 @@ Replace `x` by zero if `abs(x) < eps`. `zchop` acts recursively on
 mappable objects. Objects that cannot be sensibly compared to a real
 number are passed unaltered.
 """
-zchop(x::T, eps::Real = zeps) where {T<:Real} = abs(x) > eps ? x : zero(T)
-zchop(x::T, eps::Real = zeps) where {T<:Complex} =
-    complex(zchop(real(x), eps), zchop(imag(x), eps))
+zchop(x::Real, eps::Real = zeps) = abs(x) > eps ? x : zero(typeof(x))
+zchop(x::Complex, eps::Real = zeps) = complex(zchop(real(x), eps), zchop(imag(x), eps))
 # Following is not type stable
 zchop(x::Irrational, eps::Real = zeps) = zchop(float(x), eps)
 # Do not iterate over strings
@@ -47,7 +46,7 @@ end
 zchop(a::AbstractArray, eps::Real = zeps) = zchop!(deepcopy(a), eps)
 zchop(x::Expr, eps::Real = zeps) = Expr(x.head, zchop(x.args)...)
 
-zchop(x::T, eps::Real) where {T} = Base.isiterable(T) ? map((x)->zchop(x, eps), x) : x
-zchop(x::T) where {T} = Base.isiterable(T) ? map(zchop, x) : x
+zchop(x, eps::Real) = Base.isiterable(typeof(x)) ? map((x)->zchop(x, eps), x) : x
+zchop(x) = Base.isiterable(typeof(x)) ? map(zchop, x) : x
 
 end # module ZChop

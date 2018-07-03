@@ -71,7 +71,7 @@ julia> zchop(a)
 2x2 sparse matrix with 2 Float64 entries:
         [1, 1]  =  1.0
         [2, 2]  =  1.0
-```        
+```
 
 ### Details
 
