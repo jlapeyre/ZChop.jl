@@ -1,5 +1,6 @@
 # ZChop
-### Replace small numbers with zero
+
+*Replace small numbers with zero*
 
 Linux, OSX: [![Build Status](https://travis-ci.org/jlapeyre/ZChop.jl.svg)](https://travis-ci.org/jlapeyre/ZChop.jl)
 &nbsp;
@@ -17,6 +18,10 @@ Windows: [![Build Status](https://ci.appveyor.com/api/projects/status/github/jla
 ```zchop(x,eps)``` uses eps rather than 1e-14
 
 ```zchop!(a,eps)``` works inplace on Array a.
+
+The following examples use out-of-date syntax. See
+this [Jupyter notebook](https://github.com/jlapeyre/ZChop.jl/blob/master/Notebooks/ZChop.ipynb)
+for up-to-date examples.
 
 Examples:
 
