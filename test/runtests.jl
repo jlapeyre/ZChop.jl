@@ -57,6 +57,13 @@ end
     @test c == b
 end
 
+@testset "Number" begin
+    struct NumberSubtype <: Number
+    end
+    x = NumberSubtype()
+    @test x === zchop(x)
+end
+
 @testset "error" begin
     @test zchop((1e-15, 1, 1)) == (0.0, 1, 1)
     @test_throws MethodError zchop()

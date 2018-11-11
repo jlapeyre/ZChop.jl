@@ -49,4 +49,6 @@ zchop(x::Expr, eps::Real = zeps) = Expr(x.head, zchop(x.args)...)
 zchop(x, eps::Real) = Base.isiterable(typeof(x)) ? map((x)->zchop(x, eps), x) : x
 zchop(x) = Base.isiterable(typeof(x)) ? map(zchop, x) : x
 
+zchop(x::Number) = x
+
 end # module ZChop
