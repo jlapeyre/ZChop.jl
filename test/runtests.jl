@@ -57,9 +57,10 @@ end
     @test c == b
 end
 
+struct NumberSubtype <: Number
+end
+
 @testset "Number" begin
-    struct NumberSubtype <: Number
-    end
     x = NumberSubtype()
     @test x === zchop(x)
 end
