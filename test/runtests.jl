@@ -22,7 +22,7 @@ end
     @test zchop(za) == zza
     t = (za, za)
     @test zchop(t) == (zza, zza)
-    @test zchop( [za za] ) == [zza zza]
+    @test zchop([za za]) == [zza zza]
 end
 
 @testset "big" begin
@@ -50,12 +50,12 @@ end
     @test zchop([1e-16, "cat"]) == [0.0, "cat"]
     m = [[1.0, 2.0, 1e-16] [3.0, 4.0, 5.0]]
     @test zchop(m) == [[1.0, 2.0, 0.0] [3.0, 4.0, 5.0]]
-    @test zchop(:( "cat" + [1e-16, 2.0] )) == :( "cat" + [0.0, 2.0] )
+    @test zchop(:("cat" + [1e-16, 2.0])) == :("cat" + [0.0, 2.0])
     b = collect(1:5) * 1e-15
     c = zchop(b)
     zchop!(b)
     @test c == b
-    d = (m[:, 1]..., )
+    d = (m[:, 1]...,)
     @test zchop(d) == (1.0, 2.0, 0.0)
     @test isa(zchop(d), Tuple)
     @test zchop((x for x in d)) == zchop(collect(d))
