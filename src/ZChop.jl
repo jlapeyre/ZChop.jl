@@ -40,7 +40,7 @@ function zchop!(a::AbstractArray, eps::Real = zeps)
     return a
 end
 
-zchop(a::AbstractArray, eps::Real = zeps) = zchop!(deepcopy(a), eps)
+zchop(a::AbstractArray, eps::Real = zeps) = zchop!(copy(a), eps)
 zchop(a::Tuple, eps::Real = zeps) = zchop.(a, eps)
 zchop(x::Expr, eps::Real = zeps) = Expr(x.head, zchop(x.args)...)
 zchop(x, eps::Real) = Base.isiterable(typeof(x)) ? map((x)->zchop(x, eps), x) : x
