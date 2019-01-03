@@ -41,6 +41,7 @@ function zchop!(a::AbstractArray, eps::Real = zeps)
 end
 
 zchop(a::AbstractArray, eps::Real = zeps) = zchop!(copy(a), eps)
+zchop(a::Base.Generator, eps::Real = zeps) = zchop!(collect(a), eps)
 zchop(a::Tuple, eps::Real = zeps) = zchop.(a, eps)
 zchop(x::Expr, eps::Real = zeps) = Expr(x.head, zchop(x.args)...)
 zchop(x, eps::Real) = Base.isiterable(typeof(x)) ? map((x)->zchop(x, eps), x) : x
