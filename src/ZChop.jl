@@ -1,6 +1,3 @@
-# Faster to not load precompiled
-#  __precompile__()
-
 """
 The `ZChop` module provides the functions `zchop` and `zchop!`, which replace
 numbers that are close to zero with zero. These functions act recursivley on
@@ -44,11 +41,10 @@ function zchop!(a::AbstractArray, eps::Real = zeps)
 end
 
 zchop(a::AbstractArray, eps::Real = zeps) = zchop!(deepcopy(a), eps)
+zchop(a::Tuple, eps::Real = zeps) = zchop.(a, eps)
 zchop(x::Expr, eps::Real = zeps) = Expr(x.head, zchop(x.args)...)
-
 zchop(x, eps::Real) = Base.isiterable(typeof(x)) ? map((x)->zchop(x, eps), x) : x
 zchop(x) = Base.isiterable(typeof(x)) ? map(zchop, x) : x
-
 zchop(x::Number) = x
 
 end # module ZChop

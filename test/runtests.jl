@@ -55,6 +55,9 @@ end
     c = zchop(b)
     zchop!(b)
     @test c == b
+    d = (m[:, 1]..., )
+    @test zchop(d) == (1.0, 2.0, 0.0)
+    @test isa(zchop(d), Tuple)
 end
 
 struct NumberSubtype <: Number
