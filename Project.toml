@@ -1,9 +1,9 @@
 desc = "Replace small numbers with zero"
 license = "MIT"
-authors = ["John Lapeyre <lapeyre.math122a@gmail.com>"]
+authors = ["John Lapeyre <jlapeyre@users.noreply.github.com>"]
 name = "ZChop"
 uuid = "b27edb18-8610-11e8-0ff7-3b887cacc5ac"
-version = "0.3.3"
+version = "1.0.0"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

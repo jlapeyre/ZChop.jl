@@ -58,7 +58,8 @@ end
     d = (m[:, 1]...,)
     @test zchop(d) == (1.0, 2.0, 0.0)
     @test isa(zchop(d), Tuple)
-    @test zchop((x for x in d)) == zchop(collect(d))
+    @test isa(zchop((x for x in d)), Base.Generator)
+    @test (zchop((x for x in d))...,) == zchop(d)
 end
 
 struct NumberSubtype <: Number
