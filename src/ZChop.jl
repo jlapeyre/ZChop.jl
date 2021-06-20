@@ -34,7 +34,7 @@ zchop(x::Union{AbstractString,AbstractChar}, eps::Real = zeps) = x
 Perform `zchop` in place.
 """
 function zchop!(a::AbstractArray, eps::Real = zeps)
-    @inbounds for i in firstindex(a):lastindex(a)
+    @inbounds for i in eachindex(a)
         a[i] = zchop(a[i], eps)
     end
     return a
