@@ -3,7 +3,7 @@ license = "MIT"
 authors = ["John Lapeyre <jlapeyre@users.noreply.github.com>"]
 name = "ZChop"
 uuid = "b27edb18-8610-11e8-0ff7-3b887cacc5ac"
-version = "1.0.0"
+version = "0.3.4"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
