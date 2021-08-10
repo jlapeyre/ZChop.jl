@@ -15,10 +15,13 @@ The default lower threshold for a number to be replaced by zero.
 const zeps = 1e-14
 
 """
-    zchop(x::T, eps::Real = zeps)
+    zchop(x, eps::Real = zeps)
 
-Replace `x` by zero if `abs(x) < eps`. `zchop` acts recursively on
-mappable objects. Objects that cannot be sensibly compared to a real
+Replace `x` by zero if `abs(x) < eps`.
+
+`zchop` acts recursively on mappable objects. `zchop` acts
+independently on each part of a complex number.
+Objects whose components cannot be sensibly compared to a real
 number are passed unaltered.
 """
 zchop(x::Real, eps::Real = zeps) = abs(x) > eps ? x : zero(typeof(x))
