@@ -38,7 +38,8 @@ end
     @test zchop(Int) == Int
     @test zchop([true, false]) == [true, false]
     @test zchop('x') == 'x'
-    @test zchop(stdout) == stdout
+    # deepcopy(stdout) != stdout, so we can't test zchop this way here
+    @test zchop!(stdout) == stdout
     @test zchop(Base.pi) == float(Base.pi)
     @test zchop(Base.pi, 4) == 0.0
     @test zchop(:a) == :a
@@ -67,7 +68,8 @@ end
 
 @testset "Number" begin
     x = NumberSubtype()
-    @test x === zchop(x)
+    @test x === zchop!(x)
+    @test x == zchop(x)
 end
 
 @testset "error" begin
@@ -88,4 +90,12 @@ end
     @test x == x1
     @test y == y1
     @test m == m1
+
+    x = [1e-15, 2.0]
+    y = [2e-16, 3.0]
+    m = [x, y]
+    zchop(m)
+    @test x != x1
+    @test y != y1
+    @test m != m1
 end
