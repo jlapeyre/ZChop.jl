@@ -14,21 +14,9 @@ The default lower threshold for a number to be replaced by zero.
 """
 const ZEPS = 1e-14
 
-"""
-    zchop(x, eps::Real = ZEPS)
-
-Replace `x` by zero if `abs(x) < eps`.
-
-`zchop` acts recursively on mappable objects. `zchop` acts
-independently on each part of a complex number.
-Objects whose components cannot be sensibly compared to a real
-number are passed unaltered.
-"""
 zchop!(x::Real, eps::Real = ZEPS) = abs(x) > eps ? x : zero(typeof(x))
 zchop!(x::Complex, eps::Real = ZEPS) = complex(zchop!(real(x), eps), zchop!(imag(x), eps))
-# Following is not type stable
 zchop!(x::Irrational, eps::Real = ZEPS) = zchop!(float(x), eps)
-# Do not iterate over strings
 zchop!(x::Union{AbstractString,AbstractChar}, eps::Real = ZEPS) = x
 
 """
@@ -54,6 +42,16 @@ zchop!(x::Number, eps::Real=ZEPS) = x
 # just for arrays of some kinds of numbers. It is not clear to me what
 # the intended symantic difference is between deepcopy(Array{Float64})
 # and copy(Array{Float64}).
+"""
+    zchop(x, eps::Real = ZEPS)
+
+Replace `x` by zero if `abs(x) < eps`.
+
+`zchop` acts recursively on mappable objects. `zchop` acts
+independently on each part of a complex number.
+Objects whose components cannot be sensibly compared to a real
+number are passed unaltered.
+"""
 zchop(x::Any, eps::Real=ZEPS) = zchop!(deepcopy(x), eps)
 
 end # module ZChop

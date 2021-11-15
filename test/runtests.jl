@@ -99,3 +99,16 @@ end
     @test y != y1
     @test m != m1
 end
+
+@testset "array in tuple" begin
+    x = [1e-15, 2.0]
+    y = [2e-16, 3.0]
+    m = (x, y)
+    x1 = [0.0, 2.0]
+    y1 = [0.0, 3.0]
+    m1 = (x1, y1)
+    zchop!(m)
+    @test x == x1
+    @test y == y1
+    @test m == m1
+end
