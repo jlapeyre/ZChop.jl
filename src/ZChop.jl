@@ -14,7 +14,7 @@ The default lower threshold for a number to be replaced by zero.
 """
 const ZEPS = 1e-14
 
-zchop!(x::Real, eps::Real = ZEPS) = abs(x) > eps ? x : zero(typeof(x))
+zchop!(x::Real, eps::Real = ZEPS) = abs(x) > eps ? x : zero(x)
 zchop!(x::Complex, eps::Real = ZEPS) = complex(zchop!(real(x), eps), zchop!(imag(x), eps))
 zchop!(x::Irrational, eps::Real = ZEPS) = zchop!(float(x), eps)
 zchop!(x::Union{AbstractString,AbstractChar}, eps::Real = ZEPS) = x
