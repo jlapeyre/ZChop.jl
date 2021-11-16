@@ -22,7 +22,7 @@ Windows: [![Build Status](https://ci.appveyor.com/api/projects/status/github/jla
 
 ### `nchop`
 
-The interface and implementation of `nchop` is not finished.
+The interface and implementation of `nchop` was done November 16, 2021 and may change.
 
 ```nchop(x, args...; kwargs...)``` round `x` using `round`. If `x` is a container or nested container, round numbers in the
    containers.
