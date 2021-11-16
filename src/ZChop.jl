@@ -64,6 +64,8 @@ Replace `x` by zero if `abs(x) < eps`.
 independently on each part of a complex number.
 Objects whose components cannot be sensibly compared to a real
 number are passed unaltered.
+
+See also `zchop!`, `nchop`, and `nchop!`.
 """
 zchop(x::Any, eps::Real=ZEPS) = zchop!(deepcopy(x), eps)
 
@@ -79,6 +81,10 @@ _myround!(x, args...; kwargs...) = applyf!(nround!, x, args...; kwargs...)
 
 Round `x` if it is a number, or elements in `x` if it is a, possibly nested, container.
 `args` and `kwargs` are passed to `round`. `nchop` does not modify the input `x`.
+
+Passing a type, for example `Int` as the first argument to `round` is not supported.
+
+See also `zchop`, `zchop!`, and `nchop!`.
 """
 nchop(x, args...; digits=12, kwargs...) = nchop!(deepcopy(x), args...; digits=digits, kwargs...)
 
@@ -86,20 +92,9 @@ nchop(x, args...; digits=12, kwargs...) = nchop!(deepcopy(x), args...; digits=di
     nchop!(x, args...; digits=12, kwargs...)
 
 Mutating version of `nchop`.
+
+See also `zchop` and `zchop!`.
 """
 nchop!(x, args...; digits=12, kwargs...) = _myround!(x, args...; digits=digits, kwargs...)
 
 end # module ZChop
-
-# xx = [  7.401486830834377e-17 + 3.700743415417188e-17im
-#     8.26024732898714e-17 + 7.020733317042351e-17im
-#       0.9999999999999997 + 1.0000000000000002im
-#  -1.0177044392397268e-16 - 6.476300976980079e-17im
-#                      0.0 - 7.401486830834377e-17im
-#  -4.5595039135699516e-17 - 2.1823706978711105e-16im
-#   1.2952601953960158e-16 + 0.0im
-#  -2.1079998571544233e-16 + 5.303212320736824e-17im
-#                      0.0 - 7.401486830834377e-17im
-#   -6.476300976980079e-17 + 2.498001805406602e-16im
-#    7.401486830834377e-17 - 1.4802973661668753e-16im
-#   1.7379255156127046e-16 + 2.0982745100975517e-17im ]

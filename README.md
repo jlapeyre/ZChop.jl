@@ -35,7 +35,7 @@ The interface and implementation of `nchop` is not finished.
 * `nchop` trims noise from non-zero numbers as well.
 * `zchop` is often more than an 10 time faster than `nchop`.
 
-### Examples
+### Examples `zchop`
 
 See also this [Jupyter notebook](https://github.com/jlapeyre/ZChop.jl/blob/master/Notebooks/ZChop.ipynb)
 for more examples.
@@ -94,6 +94,38 @@ julia> zchop(a)
 2×2 SparseMatrixCSC{Float64, Int64} with 4 stored entries:
  1.0  0.0
  0.0  1.0
+```
+
+### Examples `nchop`
+
+```julia
+julia> x = [7.401486830834377e-17 + 3.700743415417188e-17im
+    8.26024732898714e-17 + 7.020733317042351e-17im
+      0.9999999999999997 + 1.0000000000000002im
+ -1.0177044392397268e-16 - 6.476300976980079e-17im
+                     0.0 - 7.401486830834377e-17im
+ -4.5595039135699516e-17 - 2.1823706978711105e-16im
+  1.2952601953960158e-16 + 0.0im
+ -2.1079998571544233e-16 + 5.303212320736824e-17im
+                     0.0 - 7.401486830834377e-17im
+  -6.476300976980079e-17 + 2.498001805406602e-16im
+   7.401486830834377e-17 - 1.4802973661668753e-16im
+   1.7379255156127046e-16 + 2.0982745100975517e-17im]
+
+julia> nchop(x)
+12-element Vector{ComplexF64}:
+  0.0 + 0.0im
+  0.0 + 0.0im
+  1.0 + 1.0im
+ -0.0 - 0.0im
+  0.0 - 0.0im
+ -0.0 - 0.0im
+  0.0 + 0.0im
+ -0.0 + 0.0im
+  0.0 - 0.0im
+ -0.0 + 0.0im
+  0.0 - 0.0im
+  0.0 + 0.0im
 ```
 
 ### Details
