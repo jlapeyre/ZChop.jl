@@ -117,6 +117,7 @@ end
     @test nchop(1.0) == 1.0
     @test nchop(1.0 + 1e-16) == 1.0
     @test nchop(1e-16) == 0.0
+    @test nchop((1., 2., 3. + 1e-16)) == (1., 2., 3.)
 end
 
 @testset "nchop nested mutation" begin
@@ -137,4 +138,13 @@ end
 
 @testset "nchop exotic" begin
     @test nchop(:(1 + 2.0000000000001)) == :(1.0 + 2.0)
+    gen = nchop(i + 1e-15 for i in 1:3)
+    @test isa(gen, Base.Generator)
+    @test collect(gen) == [1., 2., 3.]
+end
+
+@testset "nchop Number" begin
+    x = NumberSubtype()
+    @test x == nchop(x)
+    @test x === nchop!(x)
 end

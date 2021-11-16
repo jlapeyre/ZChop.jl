@@ -66,12 +66,15 @@ function applyf!(func, a::AbstractArray, args...; kwargs...)
     return a
 end
 
-applyf!(func, x::Number, args...; kwargs...) = func(x, args...; kwargs...)
+applyf!(func, x::Number,  args...; kwargs...) = x
+applyf!(func, x::Union{Real, Complex}, args...; kwargs...) = func(x, args...; kwargs...)
 applyf!(func, x::Union{AbstractString, AbstractChar, Symbol}, args...; kwargs...) = x
 applyf!(func, x::Expr, args...; kwargs...) = Expr(x.head, applyf!(func, x.args, args...; kwargs...)...)
+applyf!(func, x::Tuple, args...; kwargs...) = Tuple(applyf!(func, y, args...; kwargs...) for y in x)
+applyf!(func, x::Base.Generator, args...; kwargs...) = (applyf!(func, y, args...; kwargs...) for y in x)
 
 nround!(x::Number, args...; kwargs...) = round(x, args...; kwargs...)
-_myround!(x::Number, args...; kwargs...) = nround!(x, args...; kwargs...)
+_myround!(x::Union{Real, Complex}, args...; kwargs...) = nround!(x, args...; kwargs...)
 _myround!(x, args...; kwargs...) = applyf!(nround!, x, args...; kwargs...)
 
 """
