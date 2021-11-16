@@ -1,6 +1,6 @@
 # ZChop
 
-*Replace small numbers with zero*
+*Replace small numbers with zero, or round numbers*
 
 Linux, OSX: [![Build Status](https://travis-ci.org/jlapeyre/ZChop.jl.svg)](https://travis-ci.org/jlapeyre/ZChop.jl)
 &nbsp;
@@ -10,13 +10,31 @@ Windows: [![Build Status](https://ci.appveyor.com/api/projects/status/github/jla
 [![codecov.io](http://codecov.io/github/jlapeyre/ZChop.jl/coverage.svg?branch=master)](http://codecov.io/github/jlapeyre/ZChop.jl?branch=master)
 
 
-`zchop(x)` replaces numbers in `x` that are close to zero with zero.
+### `zchop`
+
+```zchop(x)``` replaces numbers in `x` that are close to zero with zero.
 
 ```zchop(x)``` returns 0 if abs(x) is smaller than 1e-14, and x otherwise.
 
 ```zchop(x,eps)``` uses eps rather than 1e-14
 
 ```zchop!(a,eps)``` works inplace on Array a.
+
+### `nchop`
+
+The interface and implementation of `nchop` is not finished.
+
+```nchop(x, args...; kwargs...)``` round `x` using `round`. If `x` is a container or nested container, round numbers in the
+   containers.
+
+```nchop!``` a mutating version of `nchop`.
+
+### Performance
+
+`zchop` trims noise only from numbers that should be zero. `nchop` trims noise from non-zero numbers as well.
+But, `zchop` is several times faster than `nchop`.
+
+### Examples
 
 The following examples use out-of-date syntax. See
 this [Jupyter notebook](https://github.com/jlapeyre/ZChop.jl/blob/master/Notebooks/ZChop.ipynb)
