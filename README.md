@@ -29,10 +29,11 @@ The interface and implementation of `nchop` is not finished.
 
 ```nchop!``` a mutating version of `nchop`.
 
-### Performance
+### Comments
 
-`zchop` trims noise only from numbers that should be zero. `nchop` trims noise from non-zero numbers as well.
-But, `zchop` is several times faster than `nchop`.
+* `zchop` trims noise only from numbers that should be zero.
+* `nchop` trims noise from non-zero numbers as well.
+* `zchop` is often more than an 10 time faster than `nchop`.
 
 ### Examples
 
