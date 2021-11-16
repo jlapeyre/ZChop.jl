@@ -15,29 +15,19 @@ The default lower threshold for a number to be replaced by zero.
 """
 const ZEPS = 1e-14
 
-zchop!(x::Real, eps::Real = ZEPS) = abs(x) > eps ? x : zero(x)
-zchop!(x::Complex, eps::Real = ZEPS) = complex(zchop!(real(x), eps), zchop!(imag(x), eps))
-zchop!(x::Irrational, eps::Real = ZEPS) = zchop!(float(x), eps)
-zchop!(x::Union{AbstractString,AbstractChar}, eps::Real = ZEPS) = x
-
 """
     zchop!(x::T, eps::Real = ZEPS)
 
 Perform `zchop` in place.
 """
-function zchop!(a::AbstractArray, eps::Real = ZEPS)
-    @inbounds for i in eachindex(a)
-        a[i] = zchop!(a[i], eps)
-    end
-    return a
-end
+zchop!(x, eps::Real=ZEPS) = _zchop!(x, eps)
+_zchop!(x::Union{Real, Complex}, eps) = __zchop!(x, eps)
+_zchop!(x, eps) = applyf!(__zchop!, x, eps)
 
-zchop!(a::Base.Generator, eps::Real = ZEPS) = (zchop!(x, eps) for x in a)
-zchop!(a::Tuple, eps::Real = ZEPS) = zchop!.(a, eps)
-zchop!(x::Expr, eps::Real = ZEPS) = Expr(x.head, zchop!(x.args)...)
-zchop!(x, eps::Real) = Base.isiterable(typeof(x)) ? map((x)->zchop!(x, eps), x) : x
-zchop!(x) = Base.isiterable(typeof(x)) ? map(zchop!, x) : x
-zchop!(x::Number, eps::Real=ZEPS) = x
+# TODO: Refactor, this is a bit redundant.
+__zchop!(x::Irrational, eps::Real = ZEPS) = __zchop!(float(x), eps)
+__zchop!(x::Real, eps::Real = ZEPS) = abs(x) > eps ? x : zero(x)
+__zchop!(x::Complex, eps::Real = ZEPS) = complex(__zchop!(real(x), eps), __zchop!(imag(x), eps))
 
 # TODO: This is slightly wasteful for, say, Array{Float64}. We might want a method
 # just for arrays of some kinds of numbers. It is not clear to me what
@@ -72,7 +62,10 @@ applyf!(func, x::Union{AbstractString, AbstractChar, Symbol}, args...; kwargs...
 applyf!(func, x::Expr, args...; kwargs...) = Expr(x.head, applyf!(func, x.args, args...; kwargs...)...)
 applyf!(func, x::Tuple, args...; kwargs...) = Tuple(applyf!(func, y, args...; kwargs...) for y in x)
 applyf!(func, x::Base.Generator, args...; kwargs...) = (applyf!(func, y, args...; kwargs...) for y in x)
+applyf!(func, x, args...; kwargs...) = Base.isiterable(typeof(x)) ? map(y -> applyf!(func, y, args...; kwargs...) , x) : x
+applyf!(func, x::Irrational, args...; kwargs...) = applyf!(func, float(x), args...; kwargs...)
 
+# TODO: More indirection than necessary here, I think.
 nround!(x::Number, args...; kwargs...) = round(x, args...; kwargs...)
 _myround!(x::Union{Real, Complex}, args...; kwargs...) = nround!(x, args...; kwargs...)
 _myround!(x, args...; kwargs...) = applyf!(nround!, x, args...; kwargs...)
