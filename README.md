@@ -34,6 +34,8 @@ The interface and implementation of `nchop` was done November 16, 2021 and may c
 * `zchop` trims noise only from numbers that should be zero.
 * `nchop` trims noise from non-zero numbers as well.
 * `zchop` is often more than an 10 time faster than `nchop`.
+* `zchop` and `nchop` are meant to be used at the command line or notebook for convenience
+* `zchop` is also meant to be efficient at trimming zeros after creating, but before returning, objects in functions.
 
 ### Examples `zchop`
 
