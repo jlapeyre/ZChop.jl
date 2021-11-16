@@ -36,6 +36,9 @@ But, `zchop` is several times faster than `nchop`.
 
 ### Examples
 
+See also this [Jupyter notebook](https://github.com/jlapeyre/ZChop.jl/blob/master/Notebooks/ZChop.ipynb)
+for more examples.
+
 ```julia
 julia> using FFTW
 
@@ -62,40 +65,34 @@ julia> zchop(res)
  0.0 + 0.0im
 ```
 
-The following examples use out-of-date syntax. See
-this [Jupyter notebook](https://github.com/jlapeyre/ZChop.jl/blob/master/Notebooks/ZChop.ipynb)
-for up-to-date examples.
-
-Examples:
-
 ```julia
-julia> res = exp(linspace(1,4,4) * pi * im)
-4-element Array{Complex{Float64},1}:
- -1.0+1.22465e-16im
-  1.0-2.44929e-16im
- -1.0+3.67394e-16im
-  1.0-4.89859e-16im
+julia> res = exp.((1:4) * im * pi)
+4-element Vector{ComplexF64}:
+ -1.0 + 1.2246467991473532e-16im
+  1.0 - 2.4492935982947064e-16im
+ -1.0 + 3.6739403974420594e-16im
+  1.0 - 4.898587196589413e-16im
 
 julia> zchop(res)
-4-element Array{Complex{Float64},1}:
- -1.0+0.0im
-  1.0+0.0im
- -1.0+0.0im
-  1.0+0.0im
+4-element Vector{ComplexF64}:
+ -1.0 + 0.0im
+  1.0 + 0.0im
+ -1.0 + 0.0im
+  1.0 + 0.0im
 ```
 
 ```julia
+julia> using SparseArrays
+
 julia> a = sparse([ [1.0,1e-16]  [1e-16, 1.0]])
-2x2 sparse matrix with 4 Float64 entries:
-        [1, 1]  =  1.0
-        [2, 1]  =  1.0e-16
-        [1, 2]  =  1.0e-16
-        [2, 2]  =  1.0
+2×2 SparseMatrixCSC{Float64, Int64} with 4 stored entries:
+ 1.0      1.0e-16
+ 1.0e-16  1.0
 
 julia> zchop(a)
-2x2 sparse matrix with 2 Float64 entries:
-        [1, 1]  =  1.0
-        [2, 2]  =  1.0
+2×2 SparseMatrixCSC{Float64, Int64} with 4 stored entries:
+ 1.0  0.0
+ 0.0  1.0
 ```
 
 ### Details
