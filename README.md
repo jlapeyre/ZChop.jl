@@ -36,34 +36,37 @@ But, `zchop` is several times faster than `nchop`.
 
 ### Examples
 
+```julia
+julia> using FFTW
+
+julia> using ZChop
+
+julia> res = ifft(fft([2,1,1,0,0,0,0]))
+7-element Vector{ComplexF64}:
+                    2.0 + 0.0im
+                    1.0 + 0.0im
+                    1.0 + 0.0im
+  1.527827807198305e-17 + 0.0im
+  5.727136726909545e-18 + 0.0im
+                    0.0 + 0.0im
+ -6.344131569286608e-17 + 0.0im
+
+julia> zchop(res)
+7-element Vector{ComplexF64}:
+ 2.0 + 0.0im
+ 1.0 + 0.0im
+ 1.0 + 0.0im
+ 0.0 + 0.0im
+ 0.0 + 0.0im
+ 0.0 + 0.0im
+ 0.0 + 0.0im
+```
+
 The following examples use out-of-date syntax. See
 this [Jupyter notebook](https://github.com/jlapeyre/ZChop.jl/blob/master/Notebooks/ZChop.ipynb)
 for up-to-date examples.
 
 Examples:
-
-
-```julia
-julia> res = ifft(fft([2,1,1,0,0,0,0]))
-7-element Array{Complex{Float64},1}:
-          2.0+0.0im
-          1.0+0.0im
-          1.0+0.0im
-   7.8904e-17+0.0im
-  4.79786e-17+0.0im
- -1.26883e-16+0.0im
- -6.34413e-17+0.0im
-
-julia> zchop(res)
-7-element Array{Complex{Float64},1}:
- 2.0+0.0im
- 1.0+0.0im
- 1.0+0.0im
- 0.0+0.0im
- 0.0+0.0im
- 0.0+0.0im
- 0.0+0.0im
-```
 
 ```julia
 julia> res = exp(linspace(1,4,4) * pi * im)

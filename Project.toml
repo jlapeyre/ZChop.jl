@@ -1,9 +1,12 @@
-desc = "Replace small numbers with zero"
-license = "MIT"
-authors = ["John Lapeyre <jlapeyre@users.noreply.github.com>"]
 name = "ZChop"
 uuid = "8603256b-76ad-53fe-b511-38a38e6437cd"
+license = "MIT"
+desc = "Replace small numbers with zero"
+authors = ["John Lapeyre <jlapeyre@users.noreply.github.com>"]
 version = "0.3.4"
+
+[deps]
+FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
 
 [compat]
 julia = "1"
