@@ -1,7 +1,5 @@
 """
-The `ZChop` module provides the functions `zchop` and `zchop!`, which replace
-numbers that are close to zero with zero. These functions act recursivley on
-collections.
+The `ZChop` module provides the functions `zchop`, `zchop!`, `nchop`, and `nchop!`.
 """
 module ZChop
 
