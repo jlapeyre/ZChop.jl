@@ -93,6 +93,11 @@ Mutating version of `nchop`.
 
 See also `zchop` and `zchop!`.
 """
-nchop!(x, args...; sigdigits=12, kwargs...) = _myround!(x, args...; sigdigits=sigdigits, kwargs...)
+function nchop!(x, args...; sigdigits=12, digits=nothing, kwargs...)
+    if digits != nothing
+        sigdigits = nothing
+    end
+    return _myround!(x, args...; sigdigits=sigdigits, digits=digits, kwargs...)
+end
 
 end # module ZChop
