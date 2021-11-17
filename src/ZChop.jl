@@ -75,7 +75,7 @@ _myround!(x::Union{Real, Complex}, args...; kwargs...) = nround!(x, args...; kwa
 _myround!(x, args...; kwargs...) = applyf!(nround!, x, args...; kwargs...)
 
 """
-    nchop(x, args...; digits=12, kwargs...)
+    nchop(x, args...; sigdigits=12, kwargs...)
 
 Round `x` if it is a number, or elements in `x` if it is a, possibly nested, container.
 `args` and `kwargs` are passed to `round`. `nchop` does not modify the input `x`.
@@ -84,15 +84,15 @@ Passing a type, for example `Int` as the first argument to `round` is not suppor
 
 See also `zchop`, `zchop!`, and `nchop!`.
 """
-nchop(x, args...; digits=12, kwargs...) = nchop!(deepcopy(x), args...; digits=digits, kwargs...)
+nchop(x, args...; sigdigits=12, kwargs...) = nchop!(deepcopy(x), args...; sigdigits=sigdigits, kwargs...)
 
 """
-    nchop!(x, args...; digits=12, kwargs...)
+    nchop!(x, args...; sigdigits=12, kwargs...)
 
 Mutating version of `nchop`.
 
 See also `zchop` and `zchop!`.
 """
-nchop!(x, args...; digits=12, kwargs...) = _myround!(x, args...; digits=digits, kwargs...)
+nchop!(x, args...; sigdigits=12, kwargs...) = _myround!(x, args...; sigdigits=sigdigits, kwargs...)
 
 end # module ZChop
