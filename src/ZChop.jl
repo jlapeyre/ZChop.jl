@@ -6,6 +6,14 @@ module ZChop
 export zchop, zchop!
 export nchop, nchop!
 
+const PassAtom = Union{AbstractString, AbstractChar, Symbol}
+
+#### _copy
+
+_copy(x) = deepcopy(x)
+_copy(x::PassAtom) = x
+_copy(x::Array{<:Number}) = copy(x)
+
 #### applyf!
 
 function applyf!(func, a::AbstractArray, args...; kwargs...)
@@ -17,7 +25,7 @@ end
 
 applyf!(func, x::Number,  args...; kwargs...) = x
 applyf!(func, x::Union{Real, Complex}, args...; kwargs...) = func(x, args...; kwargs...)
-applyf!(func, x::Union{AbstractString, AbstractChar, Symbol}, args...; kwargs...) = x
+applyf!(func, x::PassAtom, args...; kwargs...) = x
 applyf!(func, x::Expr, args...; kwargs...) = Expr(x.head, applyf!(func, x.args, args...; kwargs...)...)
 applyf!(func, x::Tuple, args...; kwargs...) = Tuple(applyf!(func, y, args...; kwargs...) for y in x)
 applyf!(func, x::Base.Generator, args...; kwargs...) = (applyf!(func, y, args...; kwargs...) for y in x)
@@ -40,13 +48,6 @@ zchop!(x, eps::Real=ZEPS) = applyf!(_zchop!, x, eps)
 _zchop!(x::Real, eps::Real = ZEPS) = abs(x) > eps ? x : zero(x)
 _zchop!(x::Complex, eps::Real = ZEPS) = complex(_zchop!(real(x), eps), _zchop!(imag(x), eps))
 
-# TODO: This deepcopy is slightly wasteful for, say, Array{Float64}, and for doing the identity on String.
-# We might want a method
-# just for arrays of some kinds of numbers. It is not clear to me what
-# the intended symantic difference is between deepcopy(Array{Float64})
-# and copy(Array{Float64}).
-# For example, we could introduce a function _deepcopy that specializes many cases to
-# copy or identity.
 """
     zchop(x, eps::Real = ZEPS)
 
@@ -59,7 +60,7 @@ number are passed unaltered.
 
 See also `zchop!`, `nchop`, and `nchop!`.
 """
-zchop(x::Any, eps::Real=ZEPS) = zchop!(deepcopy(x), eps)
+zchop(x::Any, eps::Real=ZEPS) = zchop!(_copy(x), eps)
 
 ## nchop, nchop!
 
@@ -87,6 +88,6 @@ Passing a type, for example `Int` as the first argument to `round` is not suppor
 
 See also `zchop`, `zchop!`, and `nchop!`.
 """
-nchop(x, args...; digits=12, kwargs...) = nchop!(deepcopy(x), args...; digits=digits, kwargs...)
+nchop(x, args...; digits=12, kwargs...) = nchop!(_copy(x), args...; digits=digits, kwargs...)
 
 end # module ZChop
