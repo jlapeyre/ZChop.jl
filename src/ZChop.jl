@@ -6,7 +6,7 @@ module ZChop
 export zchop, zchop!
 export nchop, nchop!
 
-const PassAtom = Union{AbstractString, AbstractChar, Symbol}
+const PassAtom = Union{AbstractString, AbstractChar, Symbol, Number}
 
 #### _copy
 
@@ -23,7 +23,6 @@ function applyf!(func, a::AbstractArray, args...; kwargs...)
     return a
 end
 
-applyf!(func, x::Number,  args...; kwargs...) = x
 applyf!(func, x::Union{Real, Complex}, args...; kwargs...) = func(x, args...; kwargs...)
 applyf!(func, x::PassAtom, args...; kwargs...) = x
 applyf!(func, x::Expr, args...; kwargs...) = Expr(x.head, applyf!(func, x.args, args...; kwargs...)...)
