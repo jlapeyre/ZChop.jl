@@ -31,20 +31,14 @@ The default lower threshold for a number to be replaced by zero.
 """
 const ZEPS = 1e-14
 
-# TODO: Refactor. We could get fewer methods here.
 """
     zchop!(x::T, eps::Real = ZEPS)
 
 Perform `zchop` in place.
 """
-zchop!(x, eps::Real=ZEPS) = _zchop!(x, eps)
-_zchop!(x::Union{Real, Complex}, eps) = __zchop!(x, eps)
-_zchop!(x, eps) = applyf!(__zchop!, x, eps)
-
-
-__zchop!(x::Irrational, eps::Real = ZEPS) = __zchop!(float(x), eps)
-__zchop!(x::Real, eps::Real = ZEPS) = abs(x) > eps ? x : zero(x)
-__zchop!(x::Complex, eps::Real = ZEPS) = complex(__zchop!(real(x), eps), __zchop!(imag(x), eps))
+zchop!(x, eps::Real=ZEPS) = applyf!(_zchop!, x, eps)
+_zchop!(x::Real, eps::Real = ZEPS) = abs(x) > eps ? x : zero(x)
+_zchop!(x::Complex, eps::Real = ZEPS) = complex(_zchop!(real(x), eps), _zchop!(imag(x), eps))
 
 # TODO: This deepcopy is slightly wasteful for, say, Array{Float64}, and for doing the identity on String.
 # We might want a method
