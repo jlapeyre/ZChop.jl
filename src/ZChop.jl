@@ -63,10 +63,19 @@ zchop(x::Any, eps::Real=ZEPS) = zchop!(deepcopy(x), eps)
 
 ## nchop, nchop!
 
-# TODO: More indirection than necessary here, I think.
-nround!(x::Number, args...; kwargs...) = round(x, args...; kwargs...)
-_myround!(x::Union{Real, Complex}, args...; kwargs...) = nround!(x, args...; kwargs...)
-_myround!(x, args...; kwargs...) = applyf!(nround!, x, args...; kwargs...)
+"""
+    nchop!(x, args...; digits=12, kwargs...)
+
+Mutating version of `nchop`.
+
+See also `zchop` and `zchop!`.
+"""
+function nchop!(x, args...; digits=12, sigdigits=nothing, kwargs...)
+    if sigdigits != nothing
+        digits = nothing
+    end
+    return applyf!(round, x, args...; kwargs...)
+end
 
 """
     nchop(x, args...; digits=12, kwargs...)
@@ -79,19 +88,5 @@ Passing a type, for example `Int` as the first argument to `round` is not suppor
 See also `zchop`, `zchop!`, and `nchop!`.
 """
 nchop(x, args...; digits=12, kwargs...) = nchop!(deepcopy(x), args...; digits=digits, kwargs...)
-
-"""
-    nchop!(x, args...; digits=12, kwargs...)
-
-Mutating version of `nchop`.
-
-See also `zchop` and `zchop!`.
-"""
-function nchop!(x, args...; digits=12, sigdigits=nothing, kwargs...)
-    if sigdigits != nothing
-        digits = nothing
-    end
-    return _myround!(x, args...; sigdigits=sigdigits, digits=digits, kwargs...)
-end
 
 end # module ZChop
