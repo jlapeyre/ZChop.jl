@@ -37,7 +37,8 @@ applyf!(func, x::Irrational, args...; kwargs...) = applyf!(func, float(x), args.
 
 The default lower threshold for a number to be replaced by zero.
 """
-const ZEPS = 1e-14
+const ZEPS = 1e-14 # for zchop
+const NDIGITS = 14 # for nchop
 
 """
     zchop!(x::T, eps::Real = ZEPS)
@@ -65,13 +66,13 @@ zchop(x::Any, eps::Real=ZEPS) = zchop!(_copy(x), eps)
 ## nchop, nchop!
 
 """
-    nchop!(x, args...; digits=12, kwargs...)
+    nchop!(x, args...; digits=14, kwargs...)
 
 Mutating version of `nchop`.
 
 See also `zchop` and `zchop!`.
 """
-function nchop!(x, args...; digits=12, sigdigits=nothing, kwargs...)
+function nchop!(x, args...; digits=NDIGITS, sigdigits=nothing, kwargs...)
     if sigdigits != nothing
         digits = nothing
     end
@@ -79,7 +80,7 @@ function nchop!(x, args...; digits=12, sigdigits=nothing, kwargs...)
 end
 
 """
-    nchop(x, args...; digits=12, kwargs...)
+    nchop(x, args...; digits=14, kwargs...)
 
 Round `x` if it is a number, or elements in `x` if it is a, possibly nested, container.
 `args` and `kwargs` are passed to `round`. `nchop` does not modify the input `x`.
@@ -88,6 +89,6 @@ Passing a type, for example `Int` as the first argument to `round` is not suppor
 
 See also `zchop`, `zchop!`, and `nchop!`.
 """
-nchop(x, args...; digits=12, kwargs...) = nchop!(_copy(x), args...; digits=digits, kwargs...)
+nchop(x, args...; digits=NDIGITS, kwargs...) = nchop!(_copy(x), args...; digits=digits, kwargs...)
 
 end # module ZChop
