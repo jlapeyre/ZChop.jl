@@ -3,7 +3,7 @@ uuid = "8603256b-76ad-53fe-b511-38a38e6437cd"
 license = "MIT"
 desc = "Replace small numbers with zero"
 authors = ["John Lapeyre <jlapeyre@users.noreply.github.com>"]
-version = "0.3.10"
+version = "0.3.9"
 
 [compat]
 julia = "1"
