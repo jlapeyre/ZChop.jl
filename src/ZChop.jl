@@ -75,7 +75,7 @@ function nchop!(x, args...; digits=NDIGITS, sigdigits=nothing, kwargs...)
     if sigdigits != nothing
         digits = nothing
     end
-    return applyf!(round, x, args...; kwargs...)
+    return applyf!(round, x, args...; digits=digits, sigdigits=sigdigits, kwargs...)
 end
 
 """

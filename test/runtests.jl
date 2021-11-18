@@ -121,8 +121,8 @@ end
 end
 
 @testset "nchop nested mutation" begin
-    x = [1.0 + 1e-15, 2.0 - 1e-13]
-    y = [1e4 + 1e-15, 3e4 - 1e-13]
+    x = [1.0 + 1e-15, 2.0 - 1e-16]
+    y = [1e4 + 1e-15, 3e4 - 1e-16]
     m = [x, y]
 
     x1 = [1.0, 2.0]
@@ -137,7 +137,7 @@ end
 end
 
 @testset "nchop exotic" begin
-    @test nchop(:(1 + 2.0000000000001)) == :(1.0 + 2.0)
+    @test nchop(:(1 + 2.000000000000001)) == :(1.0 + 2.0)
     gen = nchop(i + 1e-15 for i in 1:3)
     @test isa(gen, Base.Generator)
     @test collect(gen) == [1., 2., 3.]
@@ -147,4 +147,10 @@ end
     x = NumberSubtype()
     @test x == nchop(x)
     @test x === nchop!(x)
+end
+
+@testset "nchop fractional" begin
+    x = 0.34950394582398472374294723
+    @test nchop(x; digits=3) == 0.35
+    @test nchop(x; digits=4) == 0.3495
 end
