@@ -154,3 +154,8 @@ end
     @test nchop(x; digits=3) == 0.35
     @test nchop(x; digits=4) == 0.3495
 end
+
+@testset "Dict" begin
+    d = Dict(0 => 1e-15, 1 => 1e-8)
+    @test zchop(d) == Dict(0 => 0.0, 1 => 1e-8)
+end

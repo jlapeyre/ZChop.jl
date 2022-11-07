@@ -23,6 +23,14 @@ function applyf!(func, a::AbstractArray, args...; kwargs...)
     return a
 end
 
+function applyf!(func, dict::Dict, args...; kwargs...)
+    for k in keys(dict)
+        index = Base.ht_keyindex2!(dict, k)
+        @inbounds index > 0 && (dict.vals[index] = applyf!(func, dict.vals[index], args...; kwargs...))
+    end
+    return dict
+end
+
 applyf!(func, x::Union{Real, Complex}, args...; kwargs...) = func(x, args...; kwargs...)
 applyf!(func, x::PassAtom, args...; kwargs...) = x
 applyf!(func, x::Expr, args...; kwargs...) = Expr(x.head, applyf!(func, x.args, args...; kwargs...)...)
