@@ -37,6 +37,10 @@ The interface and implementation of `nchop` was done November 16, 2021 and may c
 * `zchop` and `nchop` are meant to be used at the command line or notebook for convenience
 * `zchop` is also meant to be efficient at trimming zeros after creating, but before returning, objects in functions.
 
+### Implementing methods for `zchop` and `nchop` for your types
+
+It should be enough to implement a method for `ZChop.applyf!`
+
 ### Examples `zchop`
 
 See also this [Jupyter notebook](https://github.com/jlapeyre/ZChop.jl/blob/master/Notebooks/ZChop.ipynb)
