@@ -2,6 +2,10 @@
 
 *Replace small numbers with zero, or round numbers*
 
+[![Build Status](https://github.com/jlapeyre/ZChop.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/jlapeyre/ZChop.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Coverage](https://codecov.io/gh/jlapeyre/ZChop.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/jlapeyre/ZChop.jl)
+[![codecov.io](http://codecov.io/github/jlapeyre/ZChop.jl/coverage.svg?branch=master)](http://codecov.io/github/jlapeyre/ZChop.jl?branch=master)
+
 Linux, OSX: [![Build Status](https://travis-ci.org/jlapeyre/ZChop.jl.svg)](https://travis-ci.org/jlapeyre/ZChop.jl)
 &nbsp;
 Windows: [![Build Status](https://ci.appveyor.com/api/projects/status/github/jlapeyre/ZChop.jl?branch=master&svg=true)](https://ci.appveyor.com/project/jlapeyre/zchop-jl)
