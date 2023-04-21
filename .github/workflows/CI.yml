@@ -2,7 +2,7 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - master
     tags: ['*']
   pull_request:
 concurrency:
@@ -27,6 +27,7 @@ jobs:
           - windows-latest
         arch:
           - x64
+          - x32
     steps:
       - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@v1
