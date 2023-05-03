@@ -3,7 +3,6 @@
 *Replace small numbers with zero, or round numbers*
 
 [![Build Status](https://github.com/jlapeyre/ZChop.jl/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/jlapeyre/ZChop.jl/actions/workflows/CI.yml?query=branch%3Amaster)
-[![Coverage](https://codecov.io/gh/jlapeyre/ZChop.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/jlapeyre/ZChop.jl)
 [![codecov.io](http://codecov.io/github/jlapeyre/ZChop.jl/coverage.svg?branch=master)](http://codecov.io/github/jlapeyre/ZChop.jl?branch=master)
 [![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 [![JET QA](https://img.shields.io/badge/JET.jl-%E2%9C%88%EF%B8%8F-%23aa4444)](https://github.com/aviatesk/JET.jl)
