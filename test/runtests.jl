@@ -1,6 +1,12 @@
 using ZChop
 using Test
 
+if VERSION >= v"1.7"
+    include("jet_test.jl")
+end
+
+include("aqua_test.jl")
+
 @testset "basic" begin
     @test zchop(1.0) == 1.0
     @test zchop(1e-15) == 0.0
