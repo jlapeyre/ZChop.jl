@@ -5,11 +5,6 @@ using Aqua: Aqua
     Aqua.test_deps_compat(ZChop)
 end
 
-# This often gives false positive
-@testset "aqua project toml formatting" begin
-    Aqua.test_project_toml_formatting(ZChop)
-end
-
 @testset "aqua unbound_args" begin
     Aqua.test_unbound_args(ZChop)
 end
@@ -24,8 +19,8 @@ end
     Aqua.test_ambiguities([ZChop, Core, Base])
 end
 
-@testset "aqua piracy" begin
-    Aqua.test_piracy(ZChop)
+@testset "aqua piracies" begin
+    Aqua.test_piracies(ZChop)
 end
 
 @testset "aqua project extras" begin
