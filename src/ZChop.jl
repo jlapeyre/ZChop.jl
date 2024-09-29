@@ -73,7 +73,7 @@ zchop(x::Any, eps::Real=ZEPS) = zchop!(_copy(x), eps)
 ## nchop, nchop!
 
 """
-    nchop!(x, args...; digits=14, kwargs...)
+    nchop!(x, args...; digits=14, sigdigits=nothing, kwargs...)
 
 Mutating version of `nchop`.
 
@@ -87,12 +87,13 @@ function nchop!(x, args...; digits=NDIGITS, sigdigits=nothing, kwargs...)
 end
 
 """
-    nchop(x, args...; digits=14, kwargs...)
+    nchop(x, args...; digits=14, sigdigits=nothing, kwargs...)
 
 Round `x` if it is a number, or elements in `x` if it is a, possibly nested, container.
 `args` and `kwargs` are passed to `round`. `nchop` does not modify the input `x`.
 
 Passing a type, for example `Int` as the first argument to `round` is not supported.
+`digits` and `sigdigits` are passed to `round`.
 
 See also `zchop`, `zchop!`, and `nchop!`.
 """

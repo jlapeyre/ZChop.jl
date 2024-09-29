@@ -115,6 +115,11 @@ end
     @test nchop(1.0 + 1e-16) == 1.0
     @test nchop(1e-16) == 0.0
     @test nchop((1., 2., 3. + 1e-16)) == (1., 2., 3.)
+
+    v = [1., 2., 123. + 1e-5];
+    @test nchop(v; sigdigits=5)[3] == 123.0
+    @test nchop(v; digits=5)[3] == 123.00001
+    @test nchop(v; digits=4)[3] == 123.0
 end
 
 @testset "nchop nested mutation" begin
