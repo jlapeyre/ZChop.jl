@@ -1,6 +1,6 @@
 # ZChop
 
-*Replace small numbers with zero, or round numbers*
+*Replace tiny numbers with zero, or round numbers*
 
 [![Build Status](https://github.com/jlapeyre/ZChop.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/jlapeyre/ZChop.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![Coverage](https://codecov.io/gh/jlapeyre/ZChop.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/jlapeyre/ZChop.jl)
@@ -9,24 +9,44 @@
 
 &nbsp; &nbsp; &nbsp;
 
-### `zchop`
+## Installation
 
-```zchop(x)``` replaces numbers in `x` that are close to zero with zero.
+```julia
+pkg> add ZChop
+```
 
-```zchop(x)``` returns 0 if abs(x) is smaller than 1e-14, and x otherwise.
+Requires Julia 1.x.
 
-```zchop(x,eps)``` uses eps rather than 1e-14
+## Exports
 
-```zchop!(a,eps)``` works inplace on Array a.
+- zchop(x, eps=ZEPS)
+- zchop!(x, eps=ZEPS)
+- nchop(x; digits=NDIGITS, sigdigits=nothing, kwargs...)
+- nchop!(x; digits=NDIGITS, sigdigits=nothing, kwargs...)
 
-### `nchop`
+Defaults:
+- ZEPS = 1e-14
+- NDIGITS = 14
 
-The interface and implementation of `nchop` was done November 16, 2021 and may change.
+## What it does
 
-```nchop(x, args...; kwargs...)``` round `x` using `round`. If `x` is a container or nested container, round numbers in the
-   containers.
+- zchop: replaces numbers with |x| ≤ eps by zero.
+- NaN is preserved (remains NaN).
+- Complex numbers: real and imag parts processed independently.
+- Works recursively on:
+  - AbstractArray, Tuple, NamedTuple
+  - AbstractDict
+  - Base.Generator
+  - Expr
+- Leaves non-numeric “atoms” unchanged (strings, symbols, chars, types).
+- Irrational constants (e.g. pi) are converted to Float64 before processing.
 
-```nchop!``` a mutating version of `nchop`.
+nchop/nchop!: recursively rounds using Base.round with digits or sigdigits.
+
+## Mutation and copying
+
+- zchop returns a transformed copy; does not mutate input (mutable children are copied appropriately).
+- zchop! mutates arrays and dicts in place; returns transformed tuples/generators while mutating any contained mutable arrays/dicts.
 
 ### Comments
 
@@ -44,6 +64,31 @@ It should be enough to implement a method for `ZChop.applyf!`
 
 See also this [Jupyter notebook](https://github.com/jlapeyre/ZChop.jl/blob/master/Notebooks/ZChop.ipynb)
 for more examples.
+
+```julia
+julia> using ZChop
+
+julia> zchop(1e-15)
+0.0
+
+julia> zchop(complex(1.0, 1e-15))
+1.0 + 0.0im
+
+julia> zchop((a = 1e-15, b = 2.0))
+(a = 0.0, b = 2.0)
+
+julia> zchop(Dict(0 => 1e-15, 1 => 1e-8))
+Dict(0 => 0.0, 1 => 1.0e-8)
+
+julia> zchop(:(1 + 1e-16))
+:(1 + 0.0)
+
+julia> g = (i + 1e-15 for i in 1:3); collect(zchop(g))
+[1.0, 2.0, 3.0]
+
+julia> zchop(pi), zchop(pi, 4)
+(3.141592653589793, 0.0)
+```
 
 ```julia
 julia> using FFTW
@@ -101,6 +146,18 @@ julia> zchop(a)
  0.0  1.0
 ```
 
+```julia
+julia> a = Any[ [1e-15, "dog", (BigFloat(10.0))^-15, complex(1e-15,1), 1 // 10^15],
+         [[2,3] [4,1e-15]] ];
+
+julia> zchop(a)
+2-element Array{Any,1}:
+ {0.0,"dog",0e+00 with 256 bits of precision,0.0 + 1.0im,0//1}
+ 2x2 Array{Float64,2}:
+ 2.0  4.0
+ 3.0  0.0
+```
+
 ### Examples `nchop`
 
 ```julia
@@ -133,24 +190,22 @@ julia> nchop(x)
   0.0 + 0.0im
 ```
 
-### Details
+## Notes and edge cases
 
-The type of the numbers is preserved.  For instance, complex numbers
+- Rational, BigInt, BigFloat are supported.
+- Bool, Regex, strings, symbols, chars, types are unchanged.
+- Passing a type as the first argument to round (e.g. round(Int, ...)) is not supported via nchop/nchop!.
+- The type of the numbers is preserved.  For instance, complex numbers
 with imaginary part near zero are not replaced with real numbers.
 
-zchop works on complex and rational numbers, arrays, and some other structures.
-The idea is for zchop to descend into structures, chopping numbers, and acting as the
-the identity on anything that can't be sensibly compared to eps.
+## Testing and QA
 
-### Example
 ```julia
-julia> a = Any[ [1e-15, "dog", (BigFloat(10.0))^-15, complex(1e-15,1), 1 // 10^15],
-         [[2,3] [4,1e-15]] ];
-
-julia> zchop(a)
-2-element Array{Any,1}:
- {0.0,"dog",0e+00 with 256 bits of precision,0.0 + 1.0im,0//1}
- 2x2 Array{Float64,2}:
- 2.0  4.0
- 3.0  0.0
+pkg> test ZChop
 ```
+
+The test suite includes Aqua and JET checks on supported Julia versions.
+
+## License
+
+MIT
