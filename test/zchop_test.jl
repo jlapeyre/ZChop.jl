@@ -1,3 +1,29 @@
+@testset "NaN preserved" begin
+    @test isnan(zchop(NaN))
+    @test isnan(real(zchop(complex(NaN, 1.0))))
+    @test isnan(imag(zchop(complex(1.0, NaN))))
+end
+
+@testset "NamedTuple preserved" begin
+    nt = (a=1e-15, b=2.0)
+    r = zchop(nt)
+    @test r == (a=0.0, b=2.0)
+    @test isa(r, NamedTuple)
+end
+
+@testset "AbstractDict (IdDict) non-mutating" begin
+    d = IdDict(0=>1e-15, 1=>1e-8)
+    r = zchop(d)
+    @test isa(r, IdDict)
+    @test r[0] == 0.0 && r[1] == 1e-8
+end
+
+@testset "AbstractDict (IdDict) mutating" begin
+    d = IdDict(0=>1e-15, 1=>1e-8)
+    zchop!(d)
+    @test d[0] == 0.0 && d[1] == 1e-8
+end
+
 @testset "basic" begin
     @test zchop(1.0) == 1.0
     @test zchop(1e-15) == 0.0

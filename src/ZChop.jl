@@ -23,12 +23,26 @@ function applyf!(func, a::AbstractArray, args...; kwargs...)
     return a
 end
 
+function applyf!(func, dict::AbstractDict, args...; kwargs...)
+    for (k, v) in pairs(dict)
+        dict[k] = applyf!(func, v, args...; kwargs...)
+    end
+    return dict
+end
+
 function applyf!(func, dict::Dict, args...; kwargs...)
     for k in keys(dict)
         index = Base.ht_keyindex2!(dict, k)
         @inbounds index > 0 && (dict.vals[index] = applyf!(func, dict.vals[index], args...; kwargs...))
     end
     return dict
+end
+
+# The fallback works as well.
+function applyf!(func, nt::NamedTuple, args...; kwargs...)
+    names = keys(nt)
+    vals = map(v -> applyf!(func, v, args...; kwargs...), values(nt))
+    return NamedTuple{names}(vals)
 end
 
 applyf!(func, x::Union{Real, Complex}, args...; kwargs...) = func(x, args...; kwargs...)
@@ -48,25 +62,26 @@ const ZEPS = 1e-14 # for zchop
 const NDIGITS = 14 # for nchop
 
 """
-    zchop!(x::T, eps::Real = ZEPS)
+    zchop!(x, eps::Real=ZEPS)
 
-Perform `zchop` in place.
+In-place version of zchop.
+
+Mutates arrays and dicts in-place; returns transformed tuples/generators while mutating any contained mutable arrays/dicts.
 """
 zchop!(x, eps::Real=ZEPS) = applyf!(_zchop!, x, eps)
-_zchop!(x::Real, eps::Real = ZEPS) = abs(x) > eps ? x : zero(x)
-_zchop!(x::Complex, eps::Real = ZEPS) = complex(_zchop!(real(x), eps), _zchop!(imag(x), eps))
+_zchop!(x::Real, eps::Real=ZEPS) = isnan(x) ? x : (abs(x) > eps ? x : zero(x))
+_zchop!(x::Complex, eps::Real=ZEPS) = complex(_zchop!(real(x), eps), _zchop!(imag(x), eps))
 
 """
-    zchop(x, eps::Real = ZEPS)
+    zchop(x, eps::Real=ZEPS)
 
-Replace `x` by zero if `abs(x) < eps`.
+Replace numbers with |x| ≤ eps by zero.
 
-`zchop` acts recursively on mappable objects. `zchop` acts
-independently on each part of a complex number.
-Objects whose components cannot be sensibly compared to a real
-number are passed unaltered.
+Acts recursively on arrays, tuples, NamedTuples, Dicts, generators, and Expr.
+For complex, real/imag parts are processed independently.
+Non-numeric atoms (strings, symbols, chars, types) are left unchanged.
 
-See also `zchop!`, `nchop`, and `nchop!`.
+See also zchop!, nchop, nchop!.
 """
 zchop(x::Any, eps::Real=ZEPS) = zchop!(_copy(x), eps)
 
