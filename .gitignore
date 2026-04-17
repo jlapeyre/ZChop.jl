@@ -1,3 +1,5 @@
 *.jl.cov
 *~
 Notebooks/.ipynb_checkpoints/
+Manifest.toml
+
